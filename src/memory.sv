@@ -2,6 +2,7 @@
 
 module memory #(
     parameter WORDS = 64
+    parameter mem_init = ""
 )   (
     input logic clk,
     input logic [31:0] address,
@@ -20,6 +21,10 @@ module memory #(
 localparam INDEX_BITS = $clog2(WORDS);
 
 reg [31:0] mem [0 : WORDS - 1]; // 32 bit memory array of words
+
+initial begin
+    $readmemh(mem_init, mem);
+end
 
 always @ (posedge clk) begin
     // initialise all memory to be 0
